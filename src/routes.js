@@ -8,7 +8,10 @@ export const routes = [
         method: "GET",
         path: "/tasks",
         handler: (req, res) => {
-            return res.end(JSON.stringify(database));
+
+            const tasks = database.select("tasks");
+
+            return res.end(JSON.stringify(tasks));
         },
     },
     {
