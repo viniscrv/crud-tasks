@@ -26,7 +26,7 @@ export const routes = [
                 id: randomUUID(),
                 title,
                 description,
-                // completed_at,
+                completed_at: null,
                 created_at,
                 // updated_at,
             }
@@ -49,7 +49,19 @@ export const routes = [
                 description,
             });
 
-            return res.writeHead(204).end();
+            return res.writeHead(200).end();
+        },
+    },
+    {
+        method: "PATCH",
+        path: buildRoutePath("/tasks/:id"),
+        handler: (req, res) => {
+
+            const { id } = req.params;
+
+            database.complete("tasks", id);
+
+            return res.writeHead(200).end();
         },
     },
     {

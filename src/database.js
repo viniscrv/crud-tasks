@@ -48,6 +48,24 @@ export class Database {
         }
     }
 
+    complete(table, id) {
+
+        const rowIndex = this.#database[table].findIndex(row => row.id === id);
+
+        const day = new Date().getDate();
+        const month = (new Date().getMonth()) + 1;
+        const year = new Date().getFullYear();
+
+        const date = `${day}/${month}/${year}`;
+
+        if (rowIndex > -1) {
+            if (this.#database[table][rowIndex].completed_at === null) {
+                this.#database[table][rowIndex].completed_at = date;
+                this.#persist();
+            }
+        }
+    }
+
     delete(table, id) {
         const rowIndex = this.#database[table].findIndex(row => row.id === id);
 
