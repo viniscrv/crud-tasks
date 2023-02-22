@@ -42,11 +42,10 @@ export const routes = [
         handler: (req, res) => {
 
             const { id } = req.params;
-            const { title, description } = req.body;
+            const data = req.body;
 
             database.update("tasks", id, {
-                title,
-                description,
+                ...data
             });
 
             return res.writeHead(200).end();
