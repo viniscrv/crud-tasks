@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import { getCurrentDate } from "./utils/get-current-date.js";
 
 const databasePath = new URL("../db.json", import.meta.url);
 
@@ -52,17 +53,18 @@ export class Database {
 
         const rowIndex = this.#database[table].findIndex(row => row.id === id);
 
-        const day = new Date().getDate();
-        const month = (new Date().getMonth()) + 1;
-        const year = new Date().getFullYear();
+        const date = getCurrentDate();
 
-        const date = `${day}/${month}/${year}`;
+        const currentData = this.#database[table][rowIndex];
 
         if (rowIndex > -1) {
-            if (this.#database[table][rowIndex].completed_at === null) {
-                this.#database[table][rowIndex].completed_at = date;
-                this.#persist();
+            if (currentData.completed_at === null) {
+                currentData.completed_at = date;
+            } else {
+                currentData.completed_at = null;
             }
+
+            this.#persist();
         }
     }
 
