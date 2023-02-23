@@ -33,9 +33,13 @@ export const routes = [
                 created_at: date,
             }
 
-            database.insert("tasks", task);
+            if (title && description) {
+                database.insert("tasks", task);
 
-            return res.writeHead(201).end();
+                return res.writeHead(201).end();
+            }
+
+            return res.writeHead(400).end();
         },
     },
     {
